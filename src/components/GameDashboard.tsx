@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Data from '../data/data';
 import Card from './Card';
 import confetti from 'canvas-confetti';
+import { getStorageValue } from '../utils/getStorageValue';
 
 interface ICard {
   id: number;
@@ -19,6 +20,7 @@ const GameBoard = () => {
   const [secondCard, setSecondCard] = useState<ICard | null>(null);
   const [stopFlip, setStopFlip] = useState(false);
   const [won, setWon] = useState(0);
+  const [bestScore, setBestScore] = useState(getStorageValue('bestScore'));
   let requestId: number;
 
   const frame = () => {
@@ -46,7 +48,7 @@ const GameBoard = () => {
     setTimeout(() => {
       const randomOrderArray = Data.sort(() => 0.5 - Math.random()).slice(0, 6);
       const randomLetters = randomOrderArray.concat(randomOrderArray);
-      cancelAnimationFrame(requestId)
+      cancelAnimationFrame(requestId);
       setCardsArray(randomLetters);
       setMoves(0);
       setFirstCard(null);
@@ -101,8 +103,12 @@ const GameBoard = () => {
   useEffect(() => {
     if (won === 6) {
       frame();
-    } 
-  }, [frame, won]);
+      localStorage.setItem('bestScore', JSON.stringify(moves));
+      const highScore = Math.min(moves, bestScore);
+      setBestScore(highScore);
+      localStorage.setItem('bestScore', JSON.stringify(highScore));
+    }
+  }, [frame, won, moves]);
 
   return (
     <div className='container'>
@@ -121,12 +127,11 @@ const GameBoard = () => {
           />
         ))}
       </div>
-
-      {won !== 6 ? (
-        <div className='comments'>Moves : {moves}</div>
-      ) : (
-        <div className='comments'>You Won in {moves} moves</div>
-      )}
+      <div className='comments-container'>
+        {won !== 6 ? (<div className='comments'>Moves: {moves}</div>) : (
+        <div className='comments'>You Won in {moves} moves</div>)}
+        {bestScore > 0 && (<div className='comments'>Best Score: {bestScore}</div>)}
+      </div>
       <button className='button' onClick={startNewGame}>
         New Game
       </button>
