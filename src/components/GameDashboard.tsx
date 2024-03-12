@@ -20,11 +20,11 @@ const GameBoard = () => {
   const [secondCard, setSecondCard] = useState<ICard | null>(null);
   const [stopFlip, setStopFlip] = useState(false);
   const [won, setWon] = useState(0);
-  const [bestScore, setBestScore] = useState(getStorageValue('bestScore'));
+  const [bestScore, setBestScore] = useState(getStorageValue('bestScore') || Number.POSITIVE_INFINITY);
   let requestId: number;
 
   const frame = () => {
-    const end = Date.now() + 5000;
+    const end = Date.now() + 500;
     confetti({
       particleCount: 7,
       angle: 60,
@@ -103,12 +103,11 @@ const GameBoard = () => {
   useEffect(() => {
     if (won === 6) {
       frame();
-      localStorage.setItem('bestScore', JSON.stringify(moves));
       const highScore = Math.min(moves, bestScore);
       setBestScore(highScore);
       localStorage.setItem('bestScore', JSON.stringify(highScore));
     }
-  }, [frame, won, moves]);
+  }, [frame, won]);
 
   return (
     <div className='container'>
@@ -128,9 +127,12 @@ const GameBoard = () => {
         ))}
       </div>
       <div className='comments-container'>
-        {won !== 6 ? (<div className='comments'>Moves: {moves}</div>) : (
-        <div className='comments'>You Won in {moves} moves</div>)}
-        {bestScore > 0 && (<div className='comments'>Best Score: {bestScore}</div>)}
+        {won !== 6 ? (
+          <div className='comments'>Moves: {moves}</div>
+        ) : (
+          <div className='comments'>You Won in {moves} moves</div>
+        )}
+        {bestScore > 0 && <div className='comments'>Best Score: {bestScore}</div>}
       </div>
       <button className='button' onClick={startNewGame}>
         New Game
