@@ -41,6 +41,7 @@ const GameBoard = () => {
     if (won === 0) return;
     if (Date.now() < end) {
       requestId = requestAnimationFrame(frame);
+      return;
     }
   };
 
@@ -132,7 +133,7 @@ const GameBoard = () => {
         ) : (
           <div className='comments'>You Won in {moves} moves</div>
         )}
-        {bestScore > 0 && <div className='comments'>Best Score: {bestScore}</div>}
+        {bestScore > 0 && bestScore !== Infinity && <div className='comments'>Best Score: {bestScore}</div>}
       </div>
       <button className='button' onClick={startNewGame}>
         New Game
