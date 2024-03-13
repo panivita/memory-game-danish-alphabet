@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/memory-game-danish-alphabet/static/css/main.869bf887.css",
+    "main.js": "/memory-game-danish-alphabet/static/js/main.c9a9242b.js",
+    "static/js/453.7aa9afdd.chunk.js": "/memory-game-danish-alphabet/static/js/453.7aa9afdd.chunk.js",
+    "static/media/multiple-colored-letters-wooden-table.jpg": "/memory-game-danish-alphabet/static/media/multiple-colored-letters-wooden-table.6e9f9039171cdfdbd25a.jpg",
+    "index.html": "/memory-game-danish-alphabet/index.html",
+    "main.869bf887.css.map": "/memory-game-danish-alphabet/static/css/main.869bf887.css.map",
+    "main.c9a9242b.js.map": "/memory-game-danish-alphabet/static/js/main.c9a9242b.js.map",
+    "453.7aa9afdd.chunk.js.map": "/memory-game-danish-alphabet/static/js/453.7aa9afdd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.869bf887.css",
+    "static/js/main.c9a9242b.js"
+  ]
+}
